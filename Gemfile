@@ -29,7 +29,7 @@ gem 'webrick', '~> 1.8'
 
 group :development, :test do
   # Use sqlite in development and test for ease of setup
-  gem 'sqlite3'
+  # gem 'sqlite3'
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug'
   # Only running rspec in development and test, rails-controller-testing gem needed with Rails 5
@@ -39,7 +39,7 @@ end
 
 group :production do
   # Use postgres in production as many prod environments don't support sqlite (e.g. Heroku)
-  gem 'pg', '~> 0.21.0'
+  gem 'pg', '~> 1.5.4'
   # Use Heroku asset addressing scheme and logging in production; should not affect other environments
   gem 'rails_12factor'
 end

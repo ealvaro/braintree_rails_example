@@ -13,6 +13,16 @@ class CheckoutsController < ApplicationController
     @client_token = gateway.client_token.generate
   end
 
+  def index
+    transaction_ids = gateway.transaction.search do |search|
+      search.customer_id.is "#{params[:customer_id]}"
+    end
+    @transactions = []
+    transaction_ids.ids.each do |tran_id|
+      @transactions << gateway.transaction.find(tran_id)
+    end
+  end
+
   def show
     @transaction = gateway.transaction.find(params[:id])
     @result = _create_result_hash(@transaction)
