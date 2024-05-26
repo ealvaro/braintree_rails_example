@@ -11,6 +11,63 @@
 
       <%= form_tag("/checkouts", method: "post", id: "payment-form") do %>
         <section>
+
+          <label for="first_name">
+            <span class="input-label">First Name</span>
+            <div class="input-wrapper">
+              <input id="first_name" name="first_name" type="text" placeholder="First Name" required>
+            </div>
+          </label>
+
+          <label for="last_name">
+            <span class="input-label">Last Name</span>
+            <div class="input-wrapper">
+              <input id="last_name" name="last_name" type="text" placeholder="Last Name" required>
+            </div>
+          </label>
+
+          <label for="email">
+            <span class="input-label">Email</span>
+            <div class="input-wrapper">
+              <input id="email" name="email" type="email" placeholder="Email" required>
+            </div>
+          </label>
+
+          <label for="street_address">
+            <span class="input-label">Street Address</span>
+            <div class="input-wrapper">
+              <input id="street_address" name="street_address" type="text" placeholder="Street Address" required>
+            </div>
+          </label>
+
+          <label for="extended_address">
+            <span class="input-label">Extended Address</span>
+            <div class="input-wrapper">
+              <input id="extended_address" name="extended_address" type="text" placeholder="Extended Address">
+            </div>
+          </label>
+
+          <label for="locality">
+            <span class="input-label">City</span>
+            <div class="input-wrapper">
+              <input id="locality" name="locality" type="text" placeholder="City" required>
+            </div>
+          </label>
+
+          <label for="region">
+            <span class="input-label">State/Province</span>
+            <div class="input-wrapper">
+              <input id="region" name="region" type="text" placeholder="State/Province" required>
+            </div>
+          </label>
+
+          <label for="postal_code">
+            <span class="input-label">Postal Code</span>
+            <div class="input-wrapper">
+              <input id="postal_code" name="postal_code" type="text" placeholder="Postal Code" required>
+            </div>
+          </label>
+<br/>
           <label for="amount">
             <span class="input-label">Amount</span>
             <div class="input-wrapper amount-wrapper">
@@ -22,7 +79,7 @@
             <div id="bt-dropin"></div>
           </div>
         </section>
-
+        <input type="hidden" id="country_code" name="country_code" value="US" />
         <input type="hidden" id="nonce" name="payment_method_nonce" />
         <button class="button" type="submit"><span>Test Transaction</span></button>
       <% end %>

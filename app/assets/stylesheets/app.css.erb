@@ -1894,7 +1894,8 @@ label[for="amount"] {
   }
 }
 
-label[for="amount"] .input-label {
+/* General Input Styles */
+label .input-label {
   -webkit-transition: opacity 0.2s cubic-bezier(0.445, 0.05, 0.55, 0.95);
   -moz-transition: opacity 0.2s cubic-bezier(0.445, 0.05, 0.55, 0.95);
   -ms-transition: opacity 0.2s cubic-bezier(0.445, 0.05, 0.55, 0.95);
@@ -1908,17 +1909,17 @@ label[for="amount"] .input-label {
   margin-bottom: 4px;
 }
 
-label[for="amount"].has-focus {
+label.has-focus {
   background-color: #f9f9f9;
   cursor: text;
   z-index: 2;
 }
 
-label[for="amount"].has-focus .input-wrapper:after {
+label.has-focus .input-wrapper:after {
   color: #393536;
 }
 
-label[for="amount"].has-focus .input-label {
+label.has-focus .input-label {
   color: #000;
 }
 
@@ -1938,13 +1939,27 @@ input {
   position: relative;
 }
 
-.amount-wrapper input {
+input {
   -webkit-transition: transform 0.2s cubic-bezier(0.645, 0.045, 0.355, 1), color 0.2s ease;
   -moz-transition: transform 0.2s cubic-bezier(0.645, 0.045, 0.355, 1), color 0.2s ease;
   -ms-transition: transform 0.2s cubic-bezier(0.645, 0.045, 0.355, 1), color 0.2s ease;
   -o-transition: transform 0.2s cubic-bezier(0.645, 0.045, 0.355, 1), color 0.2s ease;
   transition: transform 0.2s cubic-bezier(0.645, 0.045, 0.355, 1), color 0.2s ease;
   padding: 0 14px;
+}
+
+/* Amount Input Specific Styles */
+label[for="amount"] .input-label,
+label[for="first_name"] .input-label,
+label[for="last_name"] .input-label,
+label[for="email"] .input-label,
+label[for="street_address"] .input-label,
+label[for="extended_address"] .input-label,
+label[for="locality"] .input-label,
+label[for="region"] .input-label,
+label[for="postal_code"] .input-label,
+label[for="country_code"] .input-label {
+  color: #000;
 }
 
 .amount-wrapper:after {
@@ -1966,6 +1981,12 @@ input {
   position: absolute;
   top: 50%;
 }
+
+/* Additional Input Styles */
+.input-wrapper:after {
+  color: #393536;
+}
+
 
 /* Modules */
 

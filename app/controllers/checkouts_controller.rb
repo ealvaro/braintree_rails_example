@@ -10,35 +10,55 @@ class CheckoutsController < ApplicationController
   ]
 
   def new
-    @client_token = gateway.client_token.generate
+    @client_token = Braintree::ClientToken.generate
   end
 
   def index
-    transaction_ids = gateway.transaction.search do |search|
+    transaction_ids = Braintree::Transaction.search do |search|
       search.customer_id.is "#{params[:customer_id]}"
     end
     @transactions = []
-    transaction_ids.ids.each do |tran_id|
-      @transactions << gateway.transaction.find(tran_id)
+    if transaction_ids.ids.count > 50
+      tran_ids = transaction_ids.ids.last(50) 
+    else
+      tran_ids = transaction_ids.ids 
+    end
+    tran_ids.each do |tran_id|
+      @transactions << Braintree::Transaction.find(tran_id)
     end
   end
 
   def show
-    @transaction = gateway.transaction.find(params[:id])
+    @transaction = Braintree::Transaction.find(params[:id])
     @result = _create_result_hash(@transaction)
   end
 
   def create
+    customer_name = params["customer_name"]
     amount = params["amount"] # In production you should not take amounts directly from clients
     nonce = params["payment_method_nonce"]
 
-    result = gateway.transaction.sale(
-      amount: amount,
-      payment_method_nonce: nonce,
-      :options => {
-        :submit_for_settlement => true
+    result = Braintree::Transaction.sale(
+      amount: params[:amount],
+      payment_method_nonce: params[:payment_method_nonce],
+      customer: {
+        first_name: params[:first_name],
+        last_name: params[:last_name],
+        email: params[:email]
+      },
+      billing: {
+        street_address: params[:street_address],
+        extended_address: params[:extended_address],
+        locality: params[:locality],
+        region: params[:region],
+        postal_code: params[:postal_code],
+        country_code_alpha2: params[:country_code]
+      },
+      options: {
+        submit_for_settlement: true
       }
     )
+
 
     if result.success? || result.transaction
       redirect_to checkout_path(result.transaction.id)
@@ -65,16 +85,5 @@ class CheckoutsController < ApplicationController
         :message => "Your test transaction has a status of #{status}. See the Braintree API response and try again."
       }
     end
-  end
-
-  def gateway
-    env = ENV["BT_ENVIRONMENT"]
-
-    @gateway ||= Braintree::Gateway.new(
-      :environment => env && env.to_sym,
-      :merchant_id => ENV["BT_MERCHANT_ID"],
-      :public_key => ENV["BT_PUBLIC_KEY"],
-      :private_key => ENV["BT_PRIVATE_KEY"],
-    )
   end
 end
